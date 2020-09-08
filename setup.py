@@ -83,9 +83,6 @@ setup(
         # 'invenio_config.module': [
         #     'oarepo_actions = oarepo_actions.config',
         # ],
-        # 'invenio_i18n.translations': [
-        #     'messages = oarepo_actions',
-        # ],
     },
     setup_requires=setup_requires,
     extras_require=extras_require,
