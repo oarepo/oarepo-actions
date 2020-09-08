@@ -5,19 +5,19 @@
 # oarepo-actions is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
-addons:
-  chrome: stable # https://docs.travis-ci.com/user/chrome
+#addons:
+#  chrome: stable # https://docs.travis-ci.com/user/chrome
 
 # Chrome Webdriver fails if not on sudo
 # See https://github.com/travis-ci/travis-ci/issues/8836
 sudo: false
 
-dist: trusty # Chrome driver fails if not trusty dist
+#dist: trusty # Chrome driver fails if not trusty dist
 
 notifications:
   email: false
 
-language: python
+#language: python
 
 matrix:
   fast_finish: true
@@ -49,7 +49,7 @@ install:
   - "travis_retry pip install -r .travis-${REQUIREMENTS}-requirements.txt"
   - "travis_retry pip install -e .[$EXTRAS]"
   - "travis_retry pip install -e .[validate]"
-  #- "travis_retry pip install -e tests"
+  - "travis_retry pip install -e tests"
   - "travis_retry pip install -e sample"
 
 script:
