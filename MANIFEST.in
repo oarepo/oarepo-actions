@@ -56,3 +56,6 @@ exclude *.yml
 exclude run-tests.sh
 exclude tests
 recursive-exclude tests *.py
+
+recursive-include sample *.json
+recursive-include sample *.py

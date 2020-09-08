@@ -1,6 +1,8 @@
 from invenio_records.api import Record
 from oarepo_validate import MarshmallowValidatedRecordMixin, SchemaKeepingRecordMixin
+
 from oarepo_actions.decorators import action
+
 from .constants import SAMPLE_ALLOWED_SCHEMAS, SAMPLE_PREFERRED_SCHEMA
 from .marshmallow import SampleSchemaV1
 

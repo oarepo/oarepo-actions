@@ -1,5 +1,4 @@
 from marshmallow import fields, validate
-
 from oarepo_invenio_model.marshmallow import InvenioRecordMetadataSchemaV1Mixin
 
 

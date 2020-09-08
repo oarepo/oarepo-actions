@@ -1,7 +1,9 @@
 from invenio_base.signals import app_loaded
 
-from . import config
 from oarepo_actions.ext import function
+
+from . import config
+
 
 class SampleExt(object):
     def __init__(self, app=None):

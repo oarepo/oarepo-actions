@@ -14,7 +14,7 @@ from setuptools import find_packages, setup
 readme = open('README.rst').read()
 
 packages = find_packages()
-OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.2.1')
+OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
 # Get the version string. Cannot be done with import!
 install_requires = [
     'marshmallow',

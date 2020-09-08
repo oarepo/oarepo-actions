@@ -1,8 +1,10 @@
+import inspect
+
 import invenio_base
-from flask import url_for, abort, Blueprint
+from flask import Blueprint, abort, url_for
 from invenio_app.helpers import obj_or_import_string
 from invenio_base.signals import app_loaded
-import inspect
+
 from .record_action import RecordAction
 from .record_action_list import RecordActionList
 
