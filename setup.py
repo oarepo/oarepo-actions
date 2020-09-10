@@ -28,7 +28,8 @@ tests_require = [
     # 'isort',
     # 'check-manifest',
     'oarepo-mapping-includes',
-    'oarepo-validate'
+    'oarepo-validate',
+    'oarepo-invenio-model',
     # 'pytest-cov'
 ]
 
