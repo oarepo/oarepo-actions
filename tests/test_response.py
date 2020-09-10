@@ -6,7 +6,7 @@ from invenio_accounts.models import Role, User
 TestUsers = namedtuple('TestUsers', ['u1', 'u2', 'u3', 'r1', 'r2'])
 
 
-def test_response(app, db, client, prepare_es):
+def test_response(app, db, client):
     response = client.post('/records/', data=json.dumps({"title": "necooo"}), content_type='application/json')
     assert response.status_code == 201
 

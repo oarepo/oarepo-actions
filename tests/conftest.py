@@ -146,14 +146,14 @@ def db(app):
     _db.drop_all()
 
 
-@pytest.fixture()
-def prepare_es(app, db):
-    runner = app.test_cli_runner()
-    result = runner.invoke(destroy, ['--yes-i-know', '--force'])
-    if result.exit_code:
-        print(result.output, file=sys.stderr)
-    assert result.exit_code == 0
-    result = runner.invoke(init)
-    if result.exit_code:
-        print(result.output, file=sys.stderr)
-    assert result.exit_code == 0
+# @pytest.fixture()
+# def prepare_es(app, db):
+#     runner = app.test_cli_runner()
+#     result = runner.invoke(destroy, ['--yes-i-know', '--force'])
+#     if result.exit_code:
+#         print(result.output, file=sys.stderr)
+#     assert result.exit_code == 0
+#     result = runner.invoke(init)
+#     if result.exit_code:
+#         print(result.output, file=sys.stderr)
+#     assert result.exit_code == 0
