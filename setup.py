@@ -22,26 +22,24 @@ install_requires = [
 ]
 
 tests_require = [
-    #'invenio[base,metadata,sqlite,elasticsearch7]',
     # 'pytest>=4.6.3',
     # 'jsonschema',
     # 'pydocstyle',
     # 'isort',
     # 'check-manifest',
-    # 'pytest-cov',
-    # 'pytest-pep8',
-    'oarepo-mapping-includes'
+    'oarepo-mapping-includes',
+    'oarepo-validate',
+    'oarepo-invenio-model',
+    # 'pytest-cov'
 ]
 
 extras_require = {
     'tests': [
         *tests_require,
-
         'oarepo[tests]~={version}'.format(
             version=OAREPO_VERSION)],
     'tests-es7': [
         *tests_require,
-
         'oarepo[tests-es7]~={version}'.format(
             version=OAREPO_VERSION)],
 }
@@ -64,7 +62,7 @@ setup(
     author='Alzbeta Pokorna',
     author_email='alzbeta.pokorna@cesnet.cz',
     url='https://github.com/oarepo-actions/oarepo-actions',
-    packages=packages,
+    packages=['oarepo_actions'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
@@ -82,9 +80,6 @@ setup(
         # ],
         # 'invenio_config.module': [
         #     'oarepo_actions = oarepo_actions.config',
-        # ],
-        # 'invenio_i18n.translations': [
-        #     'messages = oarepo_actions',
         # ],
     },
     setup_requires=setup_requires,
