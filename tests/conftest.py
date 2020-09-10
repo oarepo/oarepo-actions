@@ -4,11 +4,15 @@ import os
 import shutil
 import sys
 
+import flask
 import invenio_records_rest
 import pytest
-from flask import Flask
-from flask_login import LoginManager
-from flask_principal import Principal
+from flask import Flask, current_app, make_response, url_for
+from flask_login import LoginManager, login_user
+from flask_principal import Identity, Principal, identity_changed
+from invenio_access import InvenioAccess, authenticated_user
+from invenio_access.permissions import Permission
+from invenio_accounts.models import Role, User
 from invenio_base.signals import app_loaded
 from invenio_db import InvenioDB
 from invenio_db import db as _db
@@ -17,19 +21,24 @@ from invenio_jsonschemas import InvenioJSONSchemas
 from invenio_pidstore import InvenioPIDStore
 from invenio_records import InvenioRecords
 from invenio_records_rest import InvenioRecordsREST
-from invenio_records_rest.utils import PIDConverter
-from invenio_records_rest.views import create_blueprint_from_app
+from invenio_records_rest.utils import PIDConverter, allow_all
+from invenio_records_rest.views import create_blueprint_from_app, need_record_permission
 from invenio_rest import InvenioREST
 from invenio_search import InvenioSearch
 from invenio_search.cli import destroy, init
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from sqlalchemy_utils import create_database, database_exists
-from invenio_access.permissions import Permission
+
 from sample.ext import SampleExt
-from invenio_access import InvenioAccess
-from invenio_records_rest.views import need_record_permission
 from sample.record import pf
-from invenio_records_rest.utils import allow_all
+
+
+def set_identity(u):
+    """Sets identity in flask.g to the user."""
+    identity = Identity(u.id)
+    identity.provides.add(authenticated_user)
+    identity_changed.send(current_app._get_current_object(), identity=identity)
+    assert flask.g.identity.id == u.id
 
 @pytest.fixture()
 def base_app():
@@ -87,13 +96,31 @@ def app(base_app):
     InvenioAccess(base_app)
     Principal(base_app)
     base_app.register_blueprint(invenio_records_rest.views.create_blueprint_from_app(base_app))
+    login_manager = LoginManager()
+    login_manager.init_app(base_app)
+    login_manager.login_view = 'login'
+
+
+    @login_manager.user_loader
+    def basic_user_loader(user_id):
+        user_obj = User.query.get(int(user_id))
+        return user_obj
+
+    @base_app.route('/test/login/<int:id>', methods=['GET', 'POST'])
+    def test_login(id):
+        print("test: logging user with id", id)
+        response = make_response()
+        user = User.query.get(id)
+        login_user(user)
+        set_identity(user)
+        return response
 
     app_loaded.send(None, app=base_app)
 
-
-
     with base_app.app_context():
         yield base_app
+
+
 
 
 @pytest.yield_fixture()
