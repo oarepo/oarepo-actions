@@ -4,8 +4,11 @@ import os
 import shutil
 import sys
 
+import invenio_records_rest
 import pytest
 from flask import Flask
+from flask_login import LoginManager
+from flask_principal import Principal
 from invenio_base.signals import app_loaded
 from invenio_db import InvenioDB
 from invenio_db import db as _db
@@ -21,11 +24,12 @@ from invenio_search import InvenioSearch
 from invenio_search.cli import destroy, init
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from sqlalchemy_utils import create_database, database_exists
-
+from invenio_access.permissions import Permission
 from sample.ext import SampleExt
-
-#from sample.ext import SampleExt
-
+from invenio_access import InvenioAccess
+from invenio_records_rest.views import need_record_permission
+from sample.record import pf
+from invenio_records_rest.utils import allow_all
 
 @pytest.fixture()
 def base_app():
@@ -54,7 +58,8 @@ def base_app():
         SEARCH_INDEX_PREFIX='test-',
         JSONSCHEMAS_HOST='localhost:5000',
         SEARCH_ELASTIC_HOSTS=os.environ.get('SEARCH_ELASTIC_HOSTS', None),
-        PIDSTORE_RECID_FIELD='id'
+        PIDSTORE_RECID_FIELD='id',
+        FILES_REST_PERMISSION_FACTORY = allow_all
     )
 
     InvenioDB(app_)
@@ -77,10 +82,15 @@ def app(base_app):
     base_app.url_map.converters['pid'] = PIDConverter
     SampleExt(base_app)
     OARepoMappingIncludesExt(base_app)
-
-    base_app.register_blueprint(create_blueprint_from_app(base_app))
+    LoginManager(base_app)
+    Permission(base_app)
+    InvenioAccess(base_app)
+    Principal(base_app)
+    base_app.register_blueprint(invenio_records_rest.views.create_blueprint_from_app(base_app))
 
     app_loaded.send(None, app=base_app)
+
+
 
     with base_app.app_context():
         yield base_app

@@ -18,12 +18,9 @@ def function(sender, app=None, **kwargs):
             continue
         record_class = configuration['record_class']
         record_class = obj_or_import_string(record_class)
-        for f in inspect.getmembers(record_class):
-            name, function = f
+        for name, function  in inspect.getmembers(record_class):
             if hasattr(function, '__action'):
-                #print("mam atribut")
                 attribut_content = getattr(function, '__action')
-                print(attribut_content)
                 if 'detail' in attribut_content:
                     if 'url_path' in attribut_content:
                         route_rule = configuration['list_route'] + attribut_content['url_path']
@@ -32,7 +29,7 @@ def function(sender, app=None, **kwargs):
                     actions.add_url_rule(route_rule,
                                          view_func=RecordActionList.as_view(
                                              RecordActionList.view_name.format(endpoint, name),
-                                             method=function))
+                                             method=function, permissions = attribut_content['permissions']))
                 else:
                     if 'url_path' in attribut_content:
 
@@ -44,7 +41,7 @@ def function(sender, app=None, **kwargs):
                         route_rule = configuration['item_route'] + '/' + name
                     actions.add_url_rule(route_rule,
                                          view_func=RecordAction.as_view(RecordAction.view_name.format(endpoint, name),
-                                                                        method=name))
+                                                                        method=name, permissions = attribut_content['permissions']))
     app.register_blueprint(actions)
     print(app.url_map)
 

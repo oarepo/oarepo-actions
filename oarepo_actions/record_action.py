@@ -1,7 +1,7 @@
 import json
 
 from flask import current_app
-from invenio_records_rest.views import pass_record
+from invenio_records_rest.views import need_record_permission, pass_record
 from invenio_rest import ContentNegotiatedMethodView
 
 
@@ -16,7 +16,7 @@ def make_json_response(data):
 class RecordAction(ContentNegotiatedMethodView):
     view_name = '{0}_{1}'
 
-    def __init__(self, method):
+    def __init__(self, method, permissions):
         super().__init__(
             method_serializers={
                 'GET': {'application/json' : make_json_response}
@@ -24,12 +24,12 @@ class RecordAction(ContentNegotiatedMethodView):
             default_method_media_type={
             })
         self.method = method
-
+        self.action_permission_factory = permissions
 
     @pass_record
-    #@need_record_permission('update_permission_factory')
+    @need_record_permission('action_permission_factory')
     def get(self, pid, record, **kwargs):
-        print(getattr(record, self.method))
+        #print(getattr(record, self.method))
         return getattr(record, self.method)()
         # return self.make_response(
         #     pid, record, links_factory=self.links_factory)
