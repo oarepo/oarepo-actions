@@ -32,4 +32,3 @@ class RecordActionList(ContentNegotiatedMethodView):
     @need_record_permission('action_permission_factory')
     def post(self, **kwargs):
         return getattr(self.record_class, self.function_name)(**kwargs)
-

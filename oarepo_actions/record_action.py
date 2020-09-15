@@ -10,7 +10,7 @@ class RecordAction(ContentNegotiatedMethodView):
 
     def __init__(self, permissions, serializers, function_name):
         super().__init__(
-            serializers= serializers,
+            serializers=serializers,
             default_media_type='application/json'
         )
         self.action_permission_factory = permissions
@@ -19,7 +19,7 @@ class RecordAction(ContentNegotiatedMethodView):
     @pass_record
     @need_record_permission('action_permission_factory')
     def get(self, pid, record, **kwargs):
-        return getattr(record,self.function_name)(**kwargs)
+        return getattr(record, self.function_name)(**kwargs)
 
     @pass_record
     @need_record_permission('action_permission_factory')
