@@ -24,7 +24,8 @@ def make_json_response(data):
 
 default_serializer = {'GET': {'application/json': make_json_response}, 'POST': {'application/json': make_json_response}}
 
-#todo permissions
+
+# todo permissions
 def url_helper(meths):
     no_rule = True
     route_rule = str()
@@ -56,6 +57,8 @@ def url_helper(meths):
             always_merger.merge(serializers, i)
 
     return route_rule, method, permissions, serializers, detail
+
+
 def agg_url_path(record_class):
     list_endpoints = defaultdict(dict)
     item_endpoints = defaultdict(dict)
@@ -65,6 +68,7 @@ def agg_url_path(record_class):
             item_endpoints[action['url_path']][action['method']] = action
         else:
             list_endpoints[action['url_path']][action['method']] = action
+
 
 def create_route(path, action):
     if path.endswith('/'):
@@ -80,24 +84,30 @@ def get_record_class(endpoint_configuration):
     record_class = obj_or_import_string(record_class)
     return record_class
 
+
 def extract_actions(record_class):
     for name, function in inspect.getmembers(record_class):
         if hasattr(function, '__action'):
             attribut_content = getattr(function, '__action')
             yield attribut_content
 
+
 def register_blueprints(blueprint, record_class, endpoint, endpoint_configuration):
     for action in extract_actions(record_class):
         if not action['detail']:
             blueprint.add_url_rule(create_route(endpoint_configuration['list_route'], action),
-                                 view_func=RecordActionList.as_view(
-                                     RecordActionList.view_name.format(endpoint, action["function_name"]),
-                                     permissions=action['permissions'], serializers=action['serializers'],record_class = record_class, function_name = action['function_name']), methods=[action['method']])
+                                   view_func=RecordActionList.as_view(
+                                       RecordActionList.view_name.format(endpoint, action["function_name"]),
+                                       permissions=action['permissions'], serializers=action['serializers'],
+                                       record_class=record_class, function_name=action['function_name']),
+                                   methods=[action['method']])
         else:
             blueprint.add_url_rule(create_route(endpoint_configuration['item_route'], action),
                                    view_func=RecordAction.as_view(
                                        RecordAction.view_name.format(endpoint, action["function_name"]),
-                                       permissions=action['permissions'], serializers=action['serializers'], function_name = action['function_name']), methods=[action['method']])
+                                       permissions=action['permissions'], serializers=action['serializers'],
+                                       function_name=action['function_name']), methods=[action['method']])
+
 
 def action_urls(sender, app=None, **kwargs):
     actions = Blueprint("oarepo_actions", __name__, url_prefix=None, )
@@ -108,7 +118,6 @@ def action_urls(sender, app=None, **kwargs):
             continue
         register_blueprints(actions, record_class, endpoint, configuration)
     app.register_blueprint(actions)
-    print(app.url_map)
 
 
 class Actions(object):
