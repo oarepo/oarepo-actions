@@ -28,8 +28,8 @@ from invenio_search import InvenioSearch
 from invenio_search.cli import destroy, init
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from sqlalchemy_utils import create_database, database_exists
-from oarepo_actions.ext import Actions
 
+from oarepo_actions.ext import Actions
 from sample.ext import SampleExt
 from sample.record import pf
 
