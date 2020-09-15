@@ -5,31 +5,33 @@ from invenio_records_rest.views import need_record_permission, pass_record
 from invenio_rest import ContentNegotiatedMethodView
 
 
-def make_json_response(data):
-    response = current_app.response_class(
-        json.dumps(data),
-        mimetype='application/json')
-    response.status_code = 200
-
-    return response
-
 class RecordAction(ContentNegotiatedMethodView):
     view_name = '{0}_{1}'
 
-    def __init__(self, method, permissions):
+    def __init__(self, permissions, serializers, function_name):
         super().__init__(
-            method_serializers={
-                'GET': {'application/json' : make_json_response}
-            },
-            default_method_media_type={
-            })
-        self.method = method
+            serializers= serializers,
+            default_media_type='application/json'
+        )
         self.action_permission_factory = permissions
+        self.function_name = function_name
 
     @pass_record
     @need_record_permission('action_permission_factory')
     def get(self, pid, record, **kwargs):
-        #print(getattr(record, self.method))
-        return getattr(record, self.method)()
-        # return self.make_response(
-        #     pid, record, links_factory=self.links_factory)
+        return getattr(record,self.function_name)(**kwargs)
+
+    @pass_record
+    @need_record_permission('action_permission_factory')
+    def put(self, pid, record, **kwargs):
+        return getattr(record, self.function_name)(**kwargs)
+
+    @pass_record
+    @need_record_permission('action_permission_factory')
+    def delete(self, pid, record, **kwargs):
+        return getattr(record, self.function_name)(**kwargs)
+
+    @pass_record
+    @need_record_permission('action_permission_factory')
+    def post(self, pid, record, **kwargs):
+        return getattr(record, self.function_name)(**kwargs)

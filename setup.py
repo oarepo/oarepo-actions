@@ -70,8 +70,9 @@ setup(
         # 'console_scripts': [
         #     'oarepo-actions = invenio_app.cli:cli',
         # ],
-        # 'invenio_base.apps': [
-        # ],
+        'invenio_base.apps': [
+            'oarepo_actions = oarepo_actions:Actions'
+        ],
         # 'invenio_base.blueprints': [
         #     'oarepo_actions = oarepo_actions.theme.views:blueprint',
         # ],
