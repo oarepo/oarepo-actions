@@ -2,7 +2,6 @@ from invenio_base.signals import app_loaded
 
 from . import config
 
-
 # from oarepo_actions.ext import test
 
 
