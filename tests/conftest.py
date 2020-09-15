@@ -29,6 +29,7 @@ from invenio_search.cli import destroy, init
 from oarepo_mapping_includes.ext import OARepoMappingIncludesExt
 from sqlalchemy_utils import create_database, database_exists
 
+from oarepo_actions.ext import Actions
 from sample.ext import SampleExt
 from sample.record import pf
 
@@ -95,6 +96,7 @@ def app(base_app):
     Permission(base_app)
     InvenioAccess(base_app)
     Principal(base_app)
+    Actions(base_app)
     base_app.register_blueprint(invenio_records_rest.views.create_blueprint_from_app(base_app))
     login_manager = LoginManager()
     login_manager.init_app(base_app)

@@ -11,7 +11,8 @@ import os
 
 from setuptools import find_packages, setup
 
-readme = open('README.rst').read()
+readme = open('README.md').read()
+history = open('CHANGES.md').read()
 
 packages = find_packages()
 OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
@@ -56,7 +57,8 @@ setup(
     name='oarepo-actions',
     version=version,
     description=__doc__,
-    long_description=readme,
+    long_description=readme + '\n\n' + history,
+    long_description_content_type='text/markdown',
     keywords='oarepo-actions Invenio',
     license='MIT',
     author='Alzbeta Pokorna',
@@ -67,20 +69,9 @@ setup(
     include_package_data=True,
     platforms='any',
     entry_points={
-        # 'console_scripts': [
-        #     'oarepo-actions = invenio_app.cli:cli',
-        # ],
-        # 'invenio_base.apps': [
-        # ],
-        # 'invenio_base.blueprints': [
-        #     'oarepo_actions = oarepo_actions.theme.views:blueprint',
-        # ],
-        # 'invenio_assets.webpack': [
-        #     'oarepo_actions_theme = oarepo_actions.theme.webpack:theme',
-        # ],
-        # 'invenio_config.module': [
-        #     'oarepo_actions = oarepo_actions.config',
-        # ],
+        'invenio_base.apps': [
+            'oarepo_actions = oarepo_actions:Actions'
+        ],
     },
     setup_requires=setup_requires,
     extras_require=extras_require,
