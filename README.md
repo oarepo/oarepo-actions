@@ -81,10 +81,10 @@ class SampleRecord(Record):
 
 
   [image]: https://img.shields.io/travis/oarepo-actions/oarepo-actions.svg
-  [1]: https://travis-ci.org/oarepo-actions/oarepo-actions
-  [2]: https://img.shields.io/coveralls/oarepo-actions/oarepo-actions.svg
-  [3]: https://coveralls.io/r/oarepo-actions/oarepo-actions
-  [4]: https://img.shields.io/github/license/oarepo-actions/oarepo-actions.svg
-  [5]: https://github.com/oarepo-actions/oarepo-actions/blob/master/LICENSE
+  [1]: https://travis-ci.org/oarepo/oarepo-actions
+  [2]: https://img.shields.io/coveralls/oarepo/oarepo-actions.svg
+  [3]: https://coveralls.io/r/oarepo/oarepo-actions
+  [4]: https://img.shields.io/github/license/oarepo/oarepo-actions.svg
+  [5]: https://github.com/oarepo/oarepo-actions/blob/master/LICENSE
   [6]: https://img.shields.io/pypi/v/oarepo-actions.svg
   [7]: https://pypi.org/pypi/oarepo-actions
