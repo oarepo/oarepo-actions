@@ -21,7 +21,6 @@ def make_json_response(data):
 
     return response
 
-
 default_serializer = {'GET': {'application/json': make_json_response}, 'POST': {'application/json': make_json_response}}
 
 
