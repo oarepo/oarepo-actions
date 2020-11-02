@@ -18,7 +18,7 @@ packages = find_packages()
 OAREPO_VERSION = os.environ.get('OAREPO_VERSION', '3.3.0')
 # Get the version string. Cannot be done with import!
 install_requires = [
-    'coverage',
+    #'coverage',
     'deepmerge',
     'marshmallow',
     'flask'
@@ -30,7 +30,7 @@ tests_require = [
     # 'pydocstyle',
     # 'isort',
     # 'check-manifest',
-    'coverage',
+    #'coverage',
     'deepmerge',
     'oarepo-mapping-includes',
     'oarepo-validate',
