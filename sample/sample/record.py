@@ -1,5 +1,9 @@
+import uuid
+
 from flask import make_response
 from invenio_access.permissions import Permission, any_user, authenticated_user
+from invenio_indexer.api import RecordIndexer
+from invenio_pidstore.providers.recordid import RecordIdProvider
 from invenio_records.api import Record
 from invenio_records_rest.utils import allow_all
 from oarepo_validate import MarshmallowValidatedRecordMixin, SchemaKeepingRecordMixin
@@ -10,6 +14,20 @@ from .constants import SAMPLE_ALLOWED_SCHEMAS, SAMPLE_PREFERRED_SCHEMA
 from .marshmallow import SampleSchemaV1
 
 
+def record_minter(object_uuid, data):
+
+    # pid = PersistentIdentifier.create(
+    #     pid_type='recid',
+    #     pid_value="xxxx",
+    #     object_uuid=object_uuid,
+    # )
+    provider = RecordIdProvider.create(
+        object_type='rec',
+        object_uuid=object_uuid,
+    )
+    data['id'] = provider.pid.pid_value
+
+    return provider.pid, data
 def neco():
     return {"xx": "yy"}
 def pf(record = None):
@@ -42,7 +60,7 @@ class SampleRecord(SchemaKeepingRecordMixin,
 
     @classmethod
     @action(detail=False, url_path='test', permissions=allow_all)
-    def test3(cls, param=None, **kwargs):
+    def test3(cls,record_class, param=None, **kwargs):
         return {param: "yy"}
 
     @classmethod
@@ -73,6 +91,18 @@ class SampleRecord(SchemaKeepingRecordMixin,
     @action(permissions=allow_all, url_path = 'b', method='post', serializers = {'application/json': make_response})
     def b3(self, **kwargs):
         return {"title": self["title"]}
+
+    @classmethod
+    @action(permissions=allow_all, url_path='kch',detail=False, method='post')
+    def test_record_class(cls, record_class, **kwargs):
+        # record_uuid = uuid.uuid4()
+        # data = {"title": "neco", "contributors": [{"name": "neco"}]}
+        # pid, data = record_minter(record_uuid, data)
+        # record = record_class.create(data=data, id_=record_uuid)
+        # indexer = RecordIndexer()
+        # res = indexer.index(record)
+        print(record_class.__name__)
+        return {}
 
     _schema = "sample/sample-v1.0.0.json"
     def validate(self, **kwargs):

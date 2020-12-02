@@ -19,16 +19,16 @@ class RecordActionList(ContentNegotiatedMethodView):
 
     @need_record_permission('action_permission_factory')
     def get(self, **kwargs):
-        return getattr(self.record_class, self.function_name)(**kwargs)
+        return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
 
     @need_record_permission('action_permission_factory')
     def put(self, **kwargs):
-        return getattr(self.record_class, self.function_name)(**kwargs)
+        return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
 
     @need_record_permission('action_permission_factory')
     def delete(self, **kwargs):
-        return getattr(self.record_class, self.function_name)(**kwargs)
+        return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
 
     @need_record_permission('action_permission_factory')
     def post(self, **kwargs):
-        return getattr(self.record_class, self.function_name)(**kwargs)
+        return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
