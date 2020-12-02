@@ -30,7 +30,7 @@ python:
   - "3.8"
 
 before_install:
-  - "travis_retry pip install --upgrade pip setuptools py"
+  - "travis_retry pip install --upgrade pip==20.2.4 setuptools py"
   - "travis_retry pip install twine wheel coveralls requirements-builder pip-tools"
   - "requirements-builder -e $EXTRAS --level=pypi setup.py > .travis-release-requirements.in"
   - "pip-compile -U --verbose -o .travis-release-requirements.txt .travis-release-requirements.in"
