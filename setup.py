@@ -48,7 +48,7 @@ extras_require = {
 }
 
 setup_requires = [
-    'pytest-runner>=2.7',
+   # 'pytest-runner>=2.7',
 ]
 g = {}
 with open(os.path.join('oarepo_actions', 'version.py'), 'rt') as fp:
