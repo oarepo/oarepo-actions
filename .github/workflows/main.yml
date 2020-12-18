@@ -55,8 +55,10 @@ jobs:
           python -m pip install --upgrade pip==20.2.4 wheel setuptools
           pip install -e .[tests]
 
+
       - name: Test with pytest
         run: |
+          pip install -e sample
           pytest tests
 
       - name: Check manifest
