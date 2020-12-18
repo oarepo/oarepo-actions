@@ -35,6 +35,8 @@ tests_require = [
     'oarepo-mapping-includes',
     'oarepo-validate',
     'oarepo-invenio-model',
+    'marshmallow',
+    'flask'
     # 'pytest-cov'
 ]
 
