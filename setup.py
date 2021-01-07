@@ -34,19 +34,18 @@ tests_require = [
     'oarepo-mapping-includes',
     'oarepo-validate',
     'oarepo-invenio-model',
-    'invenio-indexer'
     # 'pytest-cov'
 ]
 
 extras_require = {
     'tests': [
-        *tests_require,
         'oarepo[tests]~={version}'.format(
-            version=OAREPO_VERSION)],
+            version=OAREPO_VERSION),
+        *tests_require,],
     'tests-es7': [
-        *tests_require,
         'oarepo[tests-es7]~={version}'.format(
-            version=OAREPO_VERSION)],
+            version=OAREPO_VERSION),
+        *tests_require,],
 }
 
 setup_requires = [
