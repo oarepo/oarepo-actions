@@ -80,7 +80,7 @@ class SampleRecord(Record):
     - post method
 
 ### Record class
-If you put ``record_class`` parameter in your decorated funciton, it will be filled with record class obtained from congig.py
+If you put ``record_class`` parameter in your decorated function, it will be filled with record class obtained from config.py
 
 #### Example
 ```python
