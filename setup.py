@@ -26,7 +26,6 @@ install_requires = [
 
 tests_require = [
     # 'pytest>=4.6.3',
-    # 'jsonschema',
     # 'pydocstyle',
     # 'isort',
     # 'check-manifest',
@@ -40,13 +39,13 @@ tests_require = [
 
 extras_require = {
     'tests': [
-        *tests_require,
         'oarepo[tests]~={version}'.format(
-            version=OAREPO_VERSION)],
+            version=OAREPO_VERSION),
+        *tests_require,],
     'tests-es7': [
-        *tests_require,
         'oarepo[tests-es7]~={version}'.format(
-            version=OAREPO_VERSION)],
+            version=OAREPO_VERSION),
+        *tests_require,],
 }
 
 setup_requires = [

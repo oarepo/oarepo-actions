@@ -16,7 +16,7 @@ Usage
 The library provides functionality for adding functions into your data models with supported REST methods, which are GET, POST, PUT and DELETE.
 It will create URL rule for your method, and use default or defined serializers, permissions and url path.
 
-Decorate your method with ```@action()``` decorator and add optional parameters.
+Decorate your method with ```@action()``` decorator and add optional parameters. You must have ``**kwargs`` as your function parameter.
 
 ### List of optional parameters
 ###### url_path: 
@@ -79,6 +79,24 @@ class SampleRecord(Record):
 - url_f = ```server```/records/test
     - post method
 
+### Record class
+If you put ``record_class`` parameter in your decorated funciton, it will be filled with record class obtained from congig.py
+
+#### Example
+```python
+    @classmethod
+    @action(detail=False, url_path="jej")
+    def test(cls,record_class, **kwargs):
+        record_uuid = uuid.uuid4()
+        data = {"title": "The title of the record", "contributors": [{"name": "something"}]}
+        pid, data = record_minter(record_uuid, data)
+        record = record_class.create(data=data, id_=record_uuid)
+        indexer = RecordIndexer()
+        res = indexer.index(record)
+        db.session.commit()
+        return record
+
+```
 
   [image]: https://img.shields.io/travis/oarepo-actions/oarepo-actions.svg
   [1]: https://travis-ci.org/oarepo/oarepo-actions
