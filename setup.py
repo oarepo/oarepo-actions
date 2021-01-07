@@ -34,7 +34,7 @@ tests_require = [
     'oarepo-mapping-includes',
     'oarepo-validate',
     'oarepo-invenio-model',
-    'invenio-indexe=1.2.0'
+    'invenio-indexer'
     # 'pytest-cov'
 ]
 
