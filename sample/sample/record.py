@@ -68,6 +68,11 @@ class SampleRecord(SchemaKeepingRecordMixin,
     def test2(cls, param=None, **kwargs):
         return {param: "yy"}
 
+    @classmethod
+    @action(detail=False, url_path='mine')
+    def test321(cls, param=None, **kwargs):
+        return ["kch", "ll"]
+
     @action(url_path="blahx", permissions=allow_all, method = 'post')
     def x(self, **kwargs):
         return {"title": self["title"]}
