@@ -10,6 +10,7 @@ def test_response(app, db, client):
     response = client.post('/records/', data=json.dumps({"title": "necooo"}), content_type='application/json')
     assert response.status_code == 201
 
+
     url = "https://localhost:5000/records/jej"
     response = client.get(url)
     assert response.status_code == 200

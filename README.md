@@ -31,6 +31,8 @@ Decorate your method with ```@action()``` decorator and add optional parameters.
 ###### serializers:
 - by default `application/json` serializer. 
 - accepts dictionary where key is MIME type and value your own serializer
+- serializers takes arguments from function as *args.Therefore if you want to return array, you must
+wrap it with another array ( ```return [["a", "b", "c"]]``` )
 ###### detail: 
 - by default ```True```. Change to ```False``` if method is class method
 - determines which route will be used (```list route``` if detail is False)
