@@ -75,6 +75,9 @@ setup(
         'invenio_base.apps': [
             'oarepo_actions = oarepo_actions:Actions'
         ],
+        'invenio_base.api_apps': [
+            'oarepo_actions = oarepo_actions:Actions'
+        ]
     },
     setup_requires=setup_requires,
     extras_require=extras_require,
