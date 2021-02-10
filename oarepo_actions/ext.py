@@ -109,14 +109,15 @@ def register_blueprints(blueprint, record_class, endpoint, endpoint_configuratio
 
 
 def action_urls(sender, app=None, **kwargs):
-    actions = Blueprint("oarepo_actions", __name__, url_prefix=None, )
-    rest_endpoints = app.config["RECORDS_REST_ENDPOINTS"]
-    for endpoint, configuration in rest_endpoints.items():
-        record_class = get_record_class(configuration)
-        if not record_class:
-            continue
-        register_blueprints(actions, record_class, endpoint, configuration)
-    app.register_blueprint(actions)
+    with app.app_context():
+        actions = Blueprint("oarepo_actions", __name__, url_prefix=None, )
+        rest_endpoints = app.config["RECORDS_REST_ENDPOINTS"]
+        for endpoint, configuration in rest_endpoints.items():
+            record_class = get_record_class(configuration)
+            if not record_class:
+                continue
+            register_blueprints(actions, record_class, endpoint, configuration)
+        app.register_blueprint(actions)
 
 
 class Actions(object):
