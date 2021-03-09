@@ -4,6 +4,8 @@ from flask import current_app
 from invenio_records_rest.views import need_record_permission, pass_record
 from invenio_rest import ContentNegotiatedMethodView
 
+from .permissions import action_need_record_permission
+
 
 class RecordActionList(ContentNegotiatedMethodView):
     view_name = '{0}_{1}'
@@ -17,18 +19,18 @@ class RecordActionList(ContentNegotiatedMethodView):
         self.record_class = record_class
         self.function_name = function_name
 
-    @need_record_permission('action_permission_factory')
+    @action_need_record_permission('action_permission_factory')
     def get(self, **kwargs):
         return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
 
-    @need_record_permission('action_permission_factory')
+    @action_need_record_permission('action_permission_factory')
     def put(self, **kwargs):
         return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
 
-    @need_record_permission('action_permission_factory')
+    @action_need_record_permission('action_permission_factory')
     def delete(self, **kwargs):
         return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
 
-    @need_record_permission('action_permission_factory')
+    @action_need_record_permission('action_permission_factory')
     def post(self, **kwargs):
         return getattr(self.record_class, self.function_name)(record_class = self.record_class, **kwargs)
