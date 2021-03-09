@@ -54,11 +54,6 @@ class SampleRecord(SchemaKeepingRecordMixin,
         return neco()
 
     @classmethod
-    @action(detail=False, url_path="test/<int:param>",  permissions=pf)
-    def blah2(cls, param = None, **kwargs):
-        return {param: "yy"}
-
-    @classmethod
     @action(detail=False, url_path='test', permissions=allow_all)
     def test3(cls,record_class, param=None, **kwargs):
         return {param: "yy"}

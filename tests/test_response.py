@@ -51,10 +51,6 @@ def test_response(app, db, client):
     response = client.get(url)
     assert response.status_code == 200
 
-    url = "https://localhost:5000/records/test/40"
-    response = client.get(url)
-    assert response.status_code == 200
-
     url = "https://localhost:5000/records/test"
     response = client.post(url)
     assert response.status_code == 200
